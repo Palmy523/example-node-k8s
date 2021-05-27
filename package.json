@@ -1,0 +1,22 @@
+{
+  "name": "example-node-k8s",
+  "version": "1.0.0",
+  "description": "example node/vue stack with k8s orchestration",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Palmy523/example-node-k8s.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Palmy523/example-node-k8s/issues"
+  },
+  "homepage": "https://github.com/Palmy523/example-node-k8s#readme",
+  "devDependencies": {
+    "@kubernetes/client-node": "^0.14.3"
+  }
+}
