@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  api:
+    build: ./api
+    container_name: example-node-k8s-api
+    command: npm run dev
+    volumes:
+      - ./api:/usr/api
+      - /usr/www/node_modules
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    depends_on:
+      - redis
+  www:
+    build: ./www
+    container_name: example-node-k8s-www
+    command: npm run serve
+    volumes:
+      - ./www:/usr/www
+      - /usr/www/node_modules
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    environment:
+      - VUE_APP_API_ROUTE=http://localhost:8000/
+      - CHOKIDAR_USEPOLLING=true
+  redis:
+    image: "redis:alpine"
