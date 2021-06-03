@@ -4,21 +4,9 @@ example node/vue stack with k8s orchestration
 
 ## Requirements
 
-### Docker
-
-### MAC OS Install
-
-Follow the instructions provided at https://docs.docker.com/docker-for-mac/install/
-
-### minikube
-
-Follow the instructions provided at https://minikube.sigs.k8s.io/docs/start/
-
-### Helm
-
-#### Mac OS Install using Homebrew
-
-`brew install helm`
+- minikube
+- docker
+- node js
 
 ## Running
 
@@ -29,6 +17,20 @@ Enable Ingress
 
 `$ minikube addons enable ingress`
 
+Enable Metrics
 
+`$ minkube addons enable metrics-server`
 
+Allow minikube to pull from local images
 
+`$ eval $(minikube -p minikube docker-env)`
+
+Build containers
+
+`$ docker compose -f docker-compose-local.yml build`
+
+Run local stack with docker
+`$ docker compose -f docker-compose-local.yml up`
+
+Run k8s stack
+`$ kubectl create -R -f k8s/deployments`
