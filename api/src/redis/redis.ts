@@ -26,7 +26,8 @@ const retry_strategy = ({ attempt }) : boolean | number => {
 export const createClient = () : any => {
   console.log(`Creating redis client [host=${REDIS_HOST}, port=${REDIS_PORT}]`);
   const client = redis.createClient({
-    url: REDIS_URL
+    url: REDIS_URL,
+    retry_strategy
   });
   return client;
 };

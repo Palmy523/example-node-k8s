@@ -27,7 +27,7 @@ const increment = async () : Promise<number> => {
 
 /**
  * decr count key by 1
- * @return {Promise<number>} [description]
+ * @return {Promise<number>} Promise that resolves to the current count
  */
 const decrement = async () : Promise<number> => {
   return client.decr('count');
@@ -35,7 +35,7 @@ const decrement = async () : Promise<number> => {
 
 /**
  * gets the current count
- * @return {Promise<number>} the current count
+ * @return {Promise<number>} Promise that resolves to the current count
  */
 const getCount = async() : Promise<number> => {
   return client.get('count');
@@ -43,7 +43,7 @@ const getCount = async() : Promise<number> => {
 
 /**
  * resets the count to 0
- * @return {Promise<[string, number]>} array where the 1st index is the set status and second is the current count
+ * @return {Promise<[string, number]>} Promise that resolves to an array where the 1st index is the set status and second is the current count
  */
 const resetCount = async () : Promise<[string, number]> => {
   const multiClient = client.multi();
