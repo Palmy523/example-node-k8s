@@ -1,3 +1,4 @@
+// typescript types are broken for this package
 const redis = require('async-redis');
 
 // Max number of times to attempt reconnect if connection can't be made
@@ -11,7 +12,7 @@ const REDIS_PORT : number = process.env.REDIS_PORT ? Number(process.env.REDIS_PO
 // Redis url from environment or formed via host and port
 const REDIS_URL : string = process.env.REDIS_URL ? String(process.env.REDIS_URL) : String(`${REDIS_HOST}:${REDIS_PORT}`);
 
-const retry_strategy = ({ attempt }) => {
+const retry_strategy = ({ attempt }) : boolean | number => {
   if (attempt > REDIS_MAX_ATTEMPTS) {
     console.log('Redis max connection retrys exceeded');
     return false;
@@ -22,7 +23,7 @@ const retry_strategy = ({ attempt }) => {
   }
 };
 
-export const createClient = () => {
+export const createClient = () : any => {
   console.log(`Creating redis client [host=${REDIS_HOST}, port=${REDIS_PORT}]`);
   const client = redis.createClient({
     url: REDIS_URL
@@ -30,4 +31,6 @@ export const createClient = () => {
   return client;
 };
 
-export default createClient;
+export default {
+  createClient
+};

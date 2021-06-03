@@ -1,23 +1,55 @@
 import * as redis from 'async-redis';
 import { createClient } from './redis';
 
-const cache = createClient();
-cache.set('count', 0);
+const client = createClient();
+client.set('count', 0);
 
-const increment = async () => {
-  return cache.incr('count');
+// async-redis multi client await doesn't work so we have to 
+// resolve it using promises
+const execMultiClient = (multiClient : any) : Promise<any> => {
+  return new Promise((res, rej) => {
+    multiClient.exec((err, replies) => {
+      if(err) {
+        rej(err);
+      }
+      res(replies);
+    });
+  });
 }
 
-const decrement = async () => {
-  return cache.decr('count');
+/**
+ * incr count key by 1
+ * @return {Promise<number>} Promise that resolves to the current count
+ */
+const increment = async () : Promise<number> => {
+  return client.incr('count');
 }
 
-const getCount = async () => {
-  return cache.get('count');
+/**
+ * decr count key by 1
+ * @return {Promise<number>} [description]
+ */
+const decrement = async () : Promise<number> => {
+  return client.decr('count');
 }
 
-const resetCount = async () => {
-  return cache.set('count', 0);
+/**
+ * gets the current count
+ * @return {Promise<number>} the current count
+ */
+const getCount = async() : Promise<number> => {
+  return client.get('count');
+}
+
+/**
+ * resets the count to 0
+ * @return {Promise<[string, number]>} array where the 1st index is the set status and second is the current count
+ */
+const resetCount = async () : Promise<[string, number]> => {
+  const multiClient = client.multi();
+  multiClient.set('count', 0);
+  multiClient.get('count');
+  return execMultiClient(multiClient);
 }
 
 export default {
