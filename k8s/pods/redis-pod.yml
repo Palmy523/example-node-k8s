@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-node-counter-redis
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter
+    tier: data
+spec:
+  containers:
+    - name: redis
+      image: redis:alpine
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 6379

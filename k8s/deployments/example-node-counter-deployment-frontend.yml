@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-node-counter-frontend
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter
+    tier: frontend
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: example-node-counter
+        tier: frontend
+    spec:
+      containers:
+      - name: example-node-counter-www
+        image: example-node-k8s_www
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            cpu: 20m
+        env:
+          - name: VUE_APP_API_ROUTE
+            value: "http://$(EXAMPLE_NODE_COUNTER_API_SERVICE_HOST):$(EXAMPLE_NODE_COUNTER_API_SERVICE_PORT)/"

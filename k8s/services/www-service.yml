@@ -1,0 +1,16 @@
+# service to expose api to the public
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-node-counter-www
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter
+    tier: frontend
+spec:
+  ports:
+  - port: 8080
+    name: example-node-counter-www
+  selector:
+    tier: frontend
+  type: NodePort

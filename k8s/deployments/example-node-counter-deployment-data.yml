@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-node-counter-data
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter
+    tier: data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: data
+  template:
+    metadata:
+      labels:
+        app: example-node-counter
+        tier: data
+    spec:
+      containers:
+      - name: example-node-counter-redis
+        image: redis:alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 6379    
+        resources:
+            requests:
+              cpu: 20m

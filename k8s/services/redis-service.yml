@@ -1,0 +1,17 @@
+# cluster only private service for redis data
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-node-counter-redis
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter
+    tier: data
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+    name: example-node-counter-redis
+  selector:
+    app: example-node-counter
+    tier: data

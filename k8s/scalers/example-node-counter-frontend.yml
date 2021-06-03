@@ -1,0 +1,16 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: example-node-counter-scaler
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter-frontend
+    tier: frontend
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: example-node-counter-frontend
+  targetCPUUtilizationPercentage: 70

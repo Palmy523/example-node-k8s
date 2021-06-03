@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-node-counter-api
+  namespace: example-node-counter
+  labels:
+    app: example-node-counter
+    tier: api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: api
+  template:
+    metadata:
+      labels:
+        app: example-node-counter
+        tier: api
+    spec:
+      containers:
+      - name: exmple-node-counter-api
+        image: example-node-k8s_api
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8000
+        resources:
+            requests:
+              cpu: 20m
+        env:
+          - name: REDIS_HOST
+            value: "redis://$(EXAMPLE_NODE_COUNTER_REDIS_SERVICE_HOST)"
+          - name: REDIS_PORT
+            value: "$(EXAMPLE_NODE_COUNTER_REDIS_SERVICE_PORT)"
+
+
