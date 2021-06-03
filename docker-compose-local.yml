@@ -6,21 +6,17 @@ services:
     command: npm run dev
     volumes:
       - ./api:/usr/api
-      - /usr/www/node_modules
     restart: always
     ports:
       - "8000:8000"
     environment:
       - PORT=8000
-    depends_on:
-      - redis
   www:
     build: ./www
     container_name: example-node-k8s-www
     command: npm run serve
     volumes:
       - ./www:/usr/www
-      - /usr/www/node_modules
     restart: always
     ports:
       - "8080:8080"

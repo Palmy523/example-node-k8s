@@ -25,6 +25,10 @@ Follow the instructions provided at https://minikube.sigs.k8s.io/docs/start/
 Start minikube
 `$ minkube start`
 
+Enable Ingress
+
+`$ minikube addons enable ingress`
+
 
 
 
